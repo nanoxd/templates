@@ -1,0 +1,36 @@
+#!/bin/sh
+
+choose () {
+  printf 'What kind of project do you want to create? ' > /dev/tty
+  printf '(base|node|rust)\n' > /dev/tty
+  printf '❯ ' > /dev/tty
+  read -r project
+  echo "$project"
+}
+
+if [ -z "$1" ]; then
+  CHOICE="$(choose)"
+else
+  CHOICE="$1"
+fi
+
+# define PROJECTNAME
+if [ -z "$2" ]; then
+  printf 'What is the name of the project?\n❯ '
+  read -r PROJECTNAME
+  if [ "$PROJECTNAME" = "" ]; then
+    printf 'no name provided, exiting\n'
+    exit 1
+  fi
+else
+  PROJECTNAME="$2"
+fi
+
+shift 2
+case "$CHOICE" in
+  b|base) ew project-base "$PROJECTNAME" "$@" ;;
+  c|choo) ew project-choo "$PROJECTNAME" "$@" ;;
+  n|node) ew project-node "$PROJECTNAME" "$@" ;;
+  r|rust) ew project-rust "$PROJECTNAME" "$@" ;;
+  *) { printf 'No valid project selected. Exiting'; exit 1; }
+esac

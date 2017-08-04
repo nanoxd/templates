@@ -1,0 +1,12 @@
+#!/bin/sh
+
+if [ $# = "0" ]; then
+  printf 'usage: ew playground <PROJECTNAME>\n'
+  exit 1
+fi
+
+name="playground-$1"
+ew project-base "$name"
+
+readme="$(pwd)/$name/README.md"
+gsed -i '3 i ## See also\n' "$readme"

@@ -1,0 +1,18 @@
+#!/bin/sh
+
+dirname=$(dirname "$(readlink -f "$0")")
+
+if [ $# = "0" ]; then
+  printf 'usage: ew template <template_name>\n'
+fi
+
+name="$1"
+mkdir "$name"
+cd "$name" || exit 1
+ew shell main
+cd ../ || exit 1
+
+tmpl="$(gsed "s/PROJECTNAME/$name/g" < "$dirname/template.sh")"
+file="$(pwd)/$name/main"
+printf "\n%s\n" "$tmpl" >> "$file"
+gsed "3 i $tmpl" -i "$file"

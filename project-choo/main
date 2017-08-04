@@ -1,0 +1,93 @@
+#!/bin/sh
+
+dirname=$(dirname "$(readlink -f "$0")")
+
+readf () {
+  file="$(readlink -f "$dirname/$1")"
+  cat "$file"
+}
+
+replace () {
+  sed "s/{{$1}}/$2/g"
+}
+
+copy () {
+  infile="$1"
+  outfile="$2"
+  tmpfile="$(readlink -f "$dirname/$infile")"
+  cp --preserve=mode "$tmpfile" "$outfile"
+}
+
+# define PROJECTNAME
+if [ -z "$1" ]; then
+  printf 'What is the name of the project?\n❯ '
+  read -r PROJECTNAME
+  if [ "$PROJECTNAME" = "" ]; then
+    printf 'no name provided, exiting\n'
+    exit 1
+  fi
+else
+  PROJECTNAME="$1"
+fi
+
+# define DESCRIPTION
+if [ -z "$2" ]; then
+  printf 'What does this project do?\n❯ '
+  read -r DESCRIPTION
+  if [ "$DESCRIPTION" = "" ]; then
+    printf 'no description provided, exiting\n'
+    exit 1
+  fi
+else
+  DESCRIPTION="$2"
+fi
+
+# define USERNAME
+if [ -z "$3" ]; then
+  printf 'Under what user on GitHub will this project live?\n❯ '
+  read -r USERNAME
+  if [ "$USERNAME" = "" ]; then
+    printf 'no username provided, exiting\n'
+    exit 1
+  fi
+else
+  USERNAME="$3"
+fi
+
+
+ew project-node "$PROJECTNAME" "$DESCRIPTION" "$USERNAME"
+cd "$PROJECTNAME" || exit 1
+
+# dirs
+mkdir -p assets/
+mkdir -p elements/
+mkdir -p lib/
+mkdir -p stores/
+mkdir -p views/
+
+# install
+yarn add \
+  choo@next \
+  choo-log \
+  choo-expose \
+  sheetify \
+  tachyons
+
+yarn add -D \
+  bankai \
+  dependency-check \
+  standard
+
+copy "index.js" "index.js"
+
+pkg="$(cat package.json)"
+pkg="$(echo "$pkg" | jq 'del(.scripts.coverage)')"
+pkg="$(echo "$pkg" | jq '.scripts + { build: "bankai build" }')"
+pkg="$(echo "$pkg" | jq '.scripts + { inspect: "bankai inspect" }')"
+pkg="$(echo "$pkg" | jq '.scripts + { start: "bankai start" }')"
+pkg="$(echo "$pkg" | jq '.scripts + { start: "bankai start" }')"
+echo "$pkg" > package.json
+
+git init
+git add -A
+git commit -m .
