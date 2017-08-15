@@ -1,8 +1,8 @@
 #!/bin/sh
 
-__dirname=$(dirname "$(readlink -f "$0")")
+__dirname=$(dirname "$(greadlink -f "$0")")
 # shellcheck source=/dev/null
-. "$(readlink -f "$__dirname/../shared.sh")"
+. "$(greadlink -f "$__dirname/../shared.sh")"
 
 # define PROJECTNAME
 if [ -z "$1" ]; then

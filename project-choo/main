@@ -1,9 +1,9 @@
 #!/bin/sh
 
-dirname=$(dirname "$(readlink -f "$0")")
+dirname=$(dirname "$(greadlink -f "$0")")
 
 readf () {
-  file="$(readlink -f "$dirname/$1")"
+  file="$(greadlink -f "$dirname/$1")"
   cat "$file"
 }
 
@@ -14,7 +14,7 @@ replace () {
 copy () {
   infile="$1"
   outfile="$2"
-  tmpfile="$(readlink -f "$dirname/$infile")"
+  tmpfile="$(greadlink -f "$dirname/$infile")"
   cp --preserve=mode "$tmpfile" "$outfile"
 }
 

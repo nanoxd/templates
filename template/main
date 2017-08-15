@@ -1,6 +1,6 @@
 #!/bin/sh
 
-dirname=$(dirname "$(readlink -f "$0")")
+dirname=$(dirname "$(greadlink -f "$0")")
 
 if [ $# = "0" ]; then
   printf 'usage: ew template <template_name>\n'

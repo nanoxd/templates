@@ -1,5 +1,5 @@
-__dirname=$(dirname "$(readlink -f "$0")")
-. "$(readlink -f "$__dirname/../shared.sh")"
+__dirname=$(dirname "$(greadlink -f "$0")")
+. "$(greadlink -f "$__dirname/../shared.sh")"
 
 # define PROJECTNAME
 if [ -z "$1" ]; then

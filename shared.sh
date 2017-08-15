@@ -1,5 +1,5 @@
 readf () {
-  file="$(readlink -f "$1")"
+  file="$(greadlink -f "$1")"
   cat "$file"
 }
 
@@ -10,7 +10,7 @@ replace () {
 copy () {
   infile="$1"
   outfile="$2"
-  tmpfile="$(readlink -f "$infile")"
+  tmpfile="$(greadlink -f "$infile")"
   cat "$tmpfile" > "$outfile"
 }
 
