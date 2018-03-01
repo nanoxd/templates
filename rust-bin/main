@@ -43,4 +43,4 @@ copy "$__dirname/gitignore" .gitignore
 copy "$__dirname/src/main.rs" "src/main.rs"
 
 install_dep quicli
-cargo install
+cargo build
