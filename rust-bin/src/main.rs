@@ -8,4 +8,7 @@ struct Cli {
   verbosity: u8,
 }
 
-main!(|args: Cli, log_level: verbosity| println!("Hello world"));
+main!(|args: Cli, log_level: verbosity| {
+  let world = "world";
+  println!("Hello {}", world);
+});
