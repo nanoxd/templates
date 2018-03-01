@@ -28,6 +28,7 @@ fi
 
 shift 2
 case "$CHOICE" in
+  a|alfred) ew alfred-workflow "PROJECTNAME" "$@" ;;
   b|base) ew project-base "$PROJECTNAME" "$@" ;;
   c|choo) ew project-choo "$PROJECTNAME" "$@" ;;
   n|node) ew project-node "$PROJECTNAME" "$@" ;;
