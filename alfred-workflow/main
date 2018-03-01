@@ -1,0 +1,34 @@
+#!/bin/sh
+
+__dirname=$(dirname "$(greadlink -f "$0")")
+. "$(greadlink -f "$__dirname/../shared.sh")"
+
+install_dep () {
+  printf 'cargo: installing %s\n' "$1"
+  cargo add "$1"
+}
+
+if [ $# = "0" ]; then
+  printf 'usage: ew alfred-workflow <PROJECTNAME>\n'
+  exit 1
+fi
+
+PROJECTNAME="$1"
+
+# create base project
+ew rust-bin "$PROJECTNAME"
+cd "$PROJECTNAME" || exit 1
+
+readf "$__dirname/Makefile" \
+  | replace PROJECTNAME "$PROJECTNAME" \
+  > "Makefile"
+
+readf "$__dirname/info.plist" \
+  | replace PROJECTNAME "$PROJECTNAME" \
+  > "info.plist"
+
+copy "$__dirname/install-workflow.sh" "install-workflow.sh"
+
+# install stuff
+install_dep "alfred"
+cargo build
