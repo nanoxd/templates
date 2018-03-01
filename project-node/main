@@ -57,6 +57,4 @@ readf "$__dirname/package.json" \
 
 # install
 yarn add -D \
-  tape \
-  standard \
-  dependency-check
+  jest

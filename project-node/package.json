@@ -5,9 +5,8 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "deps": "dependency-check . && dependency-check . --extra --no-dev",
     "start": "node .",
-    "test": "standard && npm run deps"
+    "test": "jest"
   },
   "dependencies": {},
   "devDependencies": {}
