@@ -1,0 +1,29 @@
+{
+  "name": "{{PROJECTNAME}}",
+  "description": "{{DESCRIPTION}}",
+  "repository": "{{USERNAME}}/{{PROJECTNAME}}",
+  "main": "dist/index.js",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index",
+    "test": "jest"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "jest": {
+    "moduleFileExtensions": [
+      "ts",
+      "js"
+    ],
+    "modulePaths": [
+      "<rootDir>/src"
+    ],
+    "testEnvironment": "node",
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|js)$",
+    "transform": {
+      "\\.(ts|tsx)$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    }
+  }
+}

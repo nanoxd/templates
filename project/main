@@ -2,7 +2,7 @@
 
 choose () {
   printf 'What kind of project do you want to create? ' > /dev/tty
-  printf '(base|node|rust)\n' > /dev/tty
+  printf '(alfred|base|node|rust|ts)\n' > /dev/tty
   printf '❯ ' > /dev/tty
   read -r project
   echo "$project"
@@ -31,6 +31,7 @@ case "$CHOICE" in
   b|base) ew project-base "$PROJECTNAME" "$@" ;;
   c|choo) ew project-choo "$PROJECTNAME" "$@" ;;
   n|node) ew project-node "$PROJECTNAME" "$@" ;;
+  t|ts)   ew project-ts   "$PROJECTNAME" "$@" ;;
   r|rust) ew project-rust "$PROJECTNAME" "$@" ;;
   *) { printf 'No valid project selected. Exiting'; exit 1; }
 esac
