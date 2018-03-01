@@ -1,5 +1,12 @@
 #!/bin/sh
 
+install_dep () {
+  printf 'cargo: installing %s\n' "$1"
+  cargo add "$1"
+}
+
 package_name="$(pwd | sed 's/.*\///g')"
 
 sed "s/{{package_name}}/$package_name/g" < Cargo.toml
+install_dep quicli
+cargo install
