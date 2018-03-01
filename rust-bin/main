@@ -1,12 +1,46 @@
 #!/bin/sh
 
+__dirname=$(dirname "$(greadlink -f "$0")")
+. "$(greadlink -f "$__dirname/../shared.sh")"
+
 install_dep () {
   printf 'cargo: installing %s\n' "$1"
   cargo add "$1"
 }
 
-package_name="$(pwd | sed 's/.*\///g')"
+config="$(greadlink -f "$__dirname/../config.json")"
+if [ ! -f "$config" ]; then
+  printf 'error: config.json file not found\n'
+  exit 1
+fi
 
-sed "s/{{package_name}}/$package_name/g" < Cargo.toml
+if [ $# = "0" ]; then
+  printf 'usage: ew rust-bin <PROJECTNAME>\n'
+  exit 1
+fi
+
+username="$(jq -r '.username' < "$config")"
+email="$(jq -r '.email' < "$config")"
+PROJECTNAME="$1"
+# package_name="$(pwd | sed 's/.*\///g')"
+
+ew project-base "$PROJECTNAME"
+cd "$PROJECTNAME" || exit 1
+rm .gitignore
+
+# create dirs
+mkdir -p 'src/'
+
+# sed "s/{{package_name}}/$package_name/g" < Cargo.toml
+readf "$__dirname/Cargo.toml" \
+  | replace PROJECTNAME "$PROJECTNAME" \
+  | replace USERNAME "$username" \
+  | replace EMAIL "$email" \
+  > "Cargo.toml"
+
+copy "$__dirname/gitignore" .gitignore
+
+copy "$__dirname/src/main.rs" "src/main.rs"
+
 install_dep quicli
 cargo install
