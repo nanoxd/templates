@@ -25,6 +25,10 @@ readf "$__dirname/Makefile" \
   | replace WORKFLOWNAME "$WORKFLOWNAME" \
   > "Makefile"
 
+readf "$__dirname/.travis.yml" \
+  | replace WORKFLOWNAME "$WORKFLOWNAME" \
+  > ".travis.yml"
+
 readf "$__dirname/info.plist" \
   | replace PROJECTNAME "$PROJECTNAME" \
   > "info.plist"
