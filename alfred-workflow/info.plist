@@ -40,7 +40,7 @@
 					<key>escaping</key>
 					<integer>102</integer>
 					<key>keyword</key>
-					<string>flip</string>
+					<string>{{PROJECTNAME}}</string>
 					<key>queuedelaycustom</key>
 					<integer>3</integer>
 					<key>queuedelayimmediatelyinitially</key>
