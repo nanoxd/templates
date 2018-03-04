@@ -14,6 +14,7 @@ if [ $# = "0" ]; then
 fi
 
 PROJECTNAME="$1"
+WORKFLOWNAME="$(echo $PROJECTNAME | cut -d '-' -f 2)"
 
 # create base project
 ew rust-bin "$PROJECTNAME"
@@ -21,6 +22,7 @@ cd "$PROJECTNAME" || exit 1
 
 readf "$__dirname/Makefile" \
   | replace PROJECTNAME "$PROJECTNAME" \
+  | replace WORKFLOWNAME "$WORKFLOWNAME" \
   > "Makefile"
 
 readf "$__dirname/info.plist" \

@@ -1,11 +1,11 @@
-all: target/release/{{PROJECTNAME}}
+all: build
 .PHONY: all
 
-target/release/{{PROJECTNAME}}:
+build:
 	cargo build --release
-.PHONY: target/release/{{PROJECTNAME}}
+.PHONY: build
 
-install: target/release/{{PROJECTNAME}}
+install: build
 	./install-workflow.sh target/release/{{PROJECTNAME}}
 .PHONY: install
 
@@ -15,4 +15,11 @@ update-plist:
 
 clean:
 	cargo clean
+	rm -f {{WORKFLOWNAME}}.alfredworkflow
 .PHONY: clean
+
+release: clean build
+	cp target/release/{{PROJECTNAME}} .
+	zip -9 -r {{WORKFLOWNAME}}.alfredworkflow icon.png info.plist {{PROJECTNAME}}
+	rm {{PROJECTNAME}}
+
