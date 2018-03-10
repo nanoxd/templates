@@ -8,12 +8,10 @@ replace () {
 }
 
 copy () {
-  infile="$1"
-  outfile="$2"
-  tmpfile="$(greadlink -f "$infile")"
-  cat "$tmpfile" > "$outfile"
+  echo "🚚  $1 -> $2" >&2
+  cp "$1" "$2"
 }
 
 to_camel_case () {
-  gsed 's/[_|-]\([a-z]\)/\U\1/g;s/^\([a-z]\)/\1/g'
+  sed 's/[_|-]\([a-z]\)/\U\1/g;s/^\([a-z]\)/\1/g'
 }
