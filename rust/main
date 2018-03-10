@@ -40,6 +40,7 @@ readf "$__dirname/Cargo.toml" \
 readf "$__dirname/gitignore" .gitignore
 
 copy "$__dirname/main.rs" "src/main.rs"
+copy "$__dirname/rustfmt.toml" "rustfmt.toml"
 
 # install stuff
 cargo install
