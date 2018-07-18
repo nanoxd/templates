@@ -4,8 +4,8 @@ use quicli::prelude::*;
 
 #[derive(Debug, StructOpt)]
 struct Cli {
-  #[structopt(long = "verbosity", short = "v", parse(from_occurrences))]
-  verbosity: u8,
+  #[structopt(flatten)]
+  verbosity: Verbosity,
 }
 
 main!(|args: Cli, log_level: verbosity| {
