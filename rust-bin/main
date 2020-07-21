@@ -40,7 +40,9 @@ readf "$__dirname/Cargo.toml" \
 
 copy "$__dirname/gitignore" .gitignore
 
-copy "$__dirname/src/main.rs" "src/main.rs"
+readf "$__dirname/src/main.rs" \
+  | replace PROJECTNAME "$PROJECTNAME" \
+  > "src/main.rs"
 
-install_dep quicli
+install_dep structopt
 cargo build

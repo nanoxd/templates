@@ -1,14 +1,10 @@
-#[macro_use]
-extern crate quicli;
-use quicli::prelude::*;
+use structopt::StructOpt;
 
 #[derive(Debug, StructOpt)]
-struct Cli {
-  #[structopt(flatten)]
-  verbosity: Verbosity,
-}
+#[structopt(name = "{{PROJECTNAME}}", about = "An example of StructOpt usage.")]
+struct Opt {}
 
-main!(|args: Cli, log_level: verbosity| {
-  let world = "world";
-  println!("Hello {}", world);
-});
+fn main() {
+    let opt = Opt::from_args();
+    println!("{:?}", opt);
+}
