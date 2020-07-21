@@ -16,5 +16,6 @@ else
 fi
 
 note="$(echo "$note" | tr ' ' '-')"
-now="$(date -I)"
+now="$(now_iso)"
+echo $now
 touch "$now-$note.md"
